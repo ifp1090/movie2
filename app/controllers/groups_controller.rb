@@ -34,6 +34,7 @@ def create
   @group = Group.new(group_params)
   @group.user = current_user
   if @group.save
+    current_user.join!(@group)
   redirect_to groups_path
 else
   render :new
@@ -60,7 +61,7 @@ def quit
     flash[:warning] = "你已经是本讨论版成员，怎么退出"
   end
   redirect_to group_path(@group)
-end 
+end
 
 private
 def find_group_and_check_permission
